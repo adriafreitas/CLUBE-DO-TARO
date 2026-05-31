@@ -62,10 +62,8 @@ useEffect(() => {
 }, [slug]);
 
  function abrirAudio() {
- 
-
   const url =
-    `https://...`;
+    `https://xzvraybpzukrfaxmtkch.supabase.co/storage/v1/object/public/clientes/${clienteId}/clube-do-taro/2026/maio/semana-1-${slug}-03-05.mp3`;
 
   setAudioUrl(url);
   setAudioAberto(true);
@@ -77,10 +75,8 @@ function baixarPdf() {
   window.open(url, "_blank");
 }
 function abrirAudioJunho() {
-  
-
   const url =
-    `https://...`;
+    `https://xzvraybpzukrfaxmtkch.supabase.co/storage/v1/object/public/clientes/${clienteId}/clube-do-taro/2026/junho/semana-1-${slug}-01-06.mp3`;
 
   setAudioUrl(url);
   setAudioAberto(true);
@@ -362,6 +358,7 @@ margin: "0 auto",
     marginBottom: "15px",
     marginTop: "15px",
   }}
+
 >
   {junho ? "▼" : "▶"} Junho 2026
 </div>
@@ -479,8 +476,7 @@ margin: "0 auto",
         🔮 Direcionamento da Semana
       </h2>
 
-      
-
+    
 <audio
   controls
   autoPlay
