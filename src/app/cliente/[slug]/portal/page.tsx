@@ -62,12 +62,13 @@ useEffect(() => {
 }, [slug]);
 
  function abrirAudio() {
+  alert("MAIO");
+
   const url =
-    `https://xzvraybpzukrfaxmtkch.supabase.co/storage/v1/object/public/clientes/${clienteId}/clube-do-taro/2026/maio/semana-1-${slug}-03-05.mp3`;
+    `https://...`;
 
   setAudioUrl(url);
   setAudioAberto(true);
-
 }
 function baixarPdf() {
   const url =
@@ -76,10 +77,10 @@ function baixarPdf() {
   window.open(url, "_blank");
 }
 function abrirAudioJunho() {
-  alert("ABRIU O NOVO PLAYER");
+  alert("JUNHO");
 
   const url =
-    `https://xzvraybpzukrfaxmtkch.supabase.co/storage/v1/object/public/clientes/${clienteId}/clube-do-taro/2026/junho/semana-1-${slug}-01-06.mp3`;
+    `https://...`;
 
   setAudioUrl(url);
   setAudioAberto(true);
