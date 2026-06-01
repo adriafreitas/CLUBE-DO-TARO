@@ -176,7 +176,7 @@ margin: "0 auto",
       textShadow: "0 0 25px rgba(244,212,106,.25)",
     }}
   >
-    Portal Místico
+    🔮 Portal das Guardiãs e Guardiões
   </h1>
 
   <h2
@@ -187,6 +187,8 @@ margin: "0 auto",
     }}
   >
     ✨ Guardiã {nome} ✨
+    Que os oráculos iluminem seus caminhos e revelem
+as respostas que sua alma precisa neste momento.
   </h2>
 
   <div
@@ -212,6 +214,8 @@ margin: "0 auto",
     }}
   >
     Clube do Tarô Premium
+    Seu espaço exclusivo para acessar direcionamentos,
+leituras, áudios e conteúdos especiais.
   </p>
 </div>
 
