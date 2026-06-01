@@ -64,9 +64,11 @@ window.location.href =
       return;
     }
 
-    await supabase.auth.resetPasswordForEmail(email, {
-  redirectTo: "https://www.magiaoriente.com.br/auth/callback",
-});
+   const handleForgotPassword = async () => {
+  await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: "...",
+  });
+};
 
     alert("Enviamos um link para redefinir sua senha.");
   }

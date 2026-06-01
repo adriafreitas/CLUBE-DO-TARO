@@ -24,10 +24,15 @@ export default function ResetPasswordPage() {
 
     setLoading(true);
 
-    const { error } = await supabase.auth.updateUser({
-      password,
-    });
+    const sessionData = await supabase.auth.getSession();
 
+console.log("SESSION:", sessionData);
+
+const { error } = await supabase.auth.updateUser({
+  password,
+});
+
+console.log("UPDATE ERROR:", error);
     if (error) {
       setMessage(error.message);
     } else {
