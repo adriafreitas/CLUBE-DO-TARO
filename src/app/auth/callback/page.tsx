@@ -1,31 +1,36 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
 export default function AuthCallback() {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   useEffect(() => {
     async function processAuth() {
-      const code = searchParams.get("code");
+      try {
+        const url = new URL(window.location.href);
 
-      if (code) {
-        const { error } = await supabase.auth.exchangeCodeForSession(code);
+        const code = url.searchParams.get("code");
 
-        if (error) {
-          alert("Erro: " + error.message);
-          return;
+        if (code) {
+          const { error } = await supabase.auth.exchangeCodeForSession(code);
+
+          if (error) {
+            alert(error.message);
+            return;
+          }
         }
-      }
 
-      router.replace("/auth/reset-password");
+        router.replace("/auth/reset-password");
+      } catch (err) {
+        console.error(err);
+      }
     }
 
     processAuth();
-  }, [router, searchParams]);
+  }, [router]);
 
   return (
     <div
