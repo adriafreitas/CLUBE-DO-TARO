@@ -251,28 +251,56 @@ export default function Home() {
           title="Biblioteca Mística"
           subtitle="Livros, eBooks, PDFs gratuitos e vídeos para mergulhar no conhecimento espiritual."
           href="SEU_LINK_BIBLIOTECA"
-          icon={<BookOpen size={36} />}
+          icon={
+  <Image
+    src="/icons/magic-book.png"
+    alt="Biblioteca Mística"
+    width={70}
+    height={70}
+  />
+}
         />
 
         <PortalCard
           title="Cursos Exclusivos"
           subtitle="Entre em jornadas profundas de aprendizado, expansão espiritual e transformação."
           href="SEU_LINK_CURSOS"
-          icon={<GraduationCap size={36} />}
+          icon={
+  <Image
+    src="/icons/magic-book.png"
+    alt="Biblioteca Mística"
+    width={70}
+    height={70}
+  />
+}
         />
 
         <PortalCard
           title="Loja Mística"
           subtitle="Cristais, baralhos, itens energéticos e produtos especiais do seu universo místico."
           href="SEU_LINK_LOJA"
-          icon={<ShoppingBag size={36} />}
+          icon={
+  <Image
+    src="/icons/magic-book.png"
+    alt="Biblioteca Mística"
+    width={70}
+    height={70}
+  />
+}
         />
 
         <PortalCard
           title="Universo Literário"
           subtitle="Próximos lançamentos, trailers, sinopses narradas e experiências literárias imersivas."
           href="https://uiclap.bio/ADRIAFREITAS"
-          icon={<Sparkles size={36} />}
+          icon={
+  <Image
+    src="/icons/magic-book.png"
+    alt="Biblioteca Mística"
+    width={70}
+    height={70}
+  />
+}
         />
 
         <motion.section
