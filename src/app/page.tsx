@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import {
   BookOpen,
   GraduationCap,
+  Headphones,
   ShoppingBag,
   Sparkles,
   ArrowRight,
@@ -73,7 +74,14 @@ export default function Home() {
           className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03),transparent_45%)]"
         />
       </div>
-
+<div
+  className="absolute inset-0 opacity-20"
+  style={{
+    backgroundImage:
+      "radial-gradient(#ffffff 1px, transparent 1px)",
+    backgroundSize: "80px 80px",
+  }}
+/>
       {/* HERO */}
       <section className="mx-auto grid min-h-screen max-w-7xl items-center gap-10 px-6 md:grid-cols-2">
         <motion.div
@@ -81,15 +89,25 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          <p className="mb-5 text-xs uppercase tracking-[0.45em] text-[#E7C96F]">
-            Portal Místico Premium
-          </p>
+          <div className="mb-6 text-center md:text-left">
+  <div className="mb-4 text-[#E7C96F] text-xl">
+    ✦ ───── ❖ ───── ✦
+  </div>
 
-          <h1 className="font-serif text-5xl leading-tight md:text-8xl">
-            CLUBE
-            <br />
-            DO TARÔ
-          </h1>
+  <p className="mb-5 text-xs uppercase tracking-[0.45em] text-[#E7C96F]">
+    Portal Místico Premium
+  </p>
+
+  <h1 className="font-serif text-5xl leading-tight md:text-8xl text-[#E7C96F] drop-shadow-[0_0_20px_rgba(231,201,111,0.35)]">
+    CLUBE
+    <br />
+    DO TARÔ
+  </h1>
+
+  <p className="mt-5 text-2xl text-white">
+    by Ádria Freitas
+  </p>
+</div>
 
           <p className="mt-5 text-2xl text-[#E7C96F]">by Ádria Freitas</p>
 
@@ -139,7 +157,7 @@ export default function Home() {
     </p>
 
     <h2 className="font-serif text-4xl text-white md:text-6xl">
-      Explore os Portais do Clube
+      Explore o Universo do Clube do Tarô
     </h2>
 
     <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/70">
@@ -153,7 +171,9 @@ export default function Home() {
     {/* CARD 1 */}
     <div className="group rounded-[32px] border border-white/10 bg-white/5 p-8 backdrop-blur-xl transition duration-300 hover:-translate-y-2 hover:border-[#E7C96F]/40 hover:bg-white/10">
 
-      <div className="mb-6 text-5xl">🔮</div>
+      <div className="mb-6 text-[#E7C96F]">
+  <Sparkles size={56} />
+</div>
 
       <h3 className="mb-4 font-serif text-3xl text-white">
         Leituras Mensais
@@ -168,7 +188,10 @@ export default function Home() {
     {/* CARD 2 */}
     <div className="group rounded-[32px] border border-white/10 bg-white/5 p-8 backdrop-blur-xl transition duration-300 hover:-translate-y-2 hover:border-[#E7C96F]/40 hover:bg-white/10">
 
-      <div className="mb-6 text-5xl">🎧</div>
+      <div className="mb-6 text-[#E7C96F]">
+  <Headphones size={56} />
+
+</div>
 
       <h3 className="mb-4 font-serif text-3xl text-white">
         Áudios Exclusivos
@@ -183,15 +206,16 @@ export default function Home() {
     {/* CARD 3 */}
     <div className="group rounded-[32px] border border-white/10 bg-white/5 p-8 backdrop-blur-xl transition duration-300 hover:-translate-y-2 hover:border-[#E7C96F]/40 hover:bg-white/10">
 
-      <div className="mb-6 text-5xl">✨</div>
+      <div className="mb-6 text-[#E7C96F]">
+  <BookOpen size={56} />
+</div>
 
       <h3 className="mb-4 font-serif text-3xl text-white">
-        Portal Espiritual
+        Biblioteca Mística
       </h3>
 
       <p className="leading-relaxed text-white/70">
-        Uma experiência premium com acesso organizado por meses, semanas e
-        conteúdos espirituais exclusivos.
+        E-books, romances umbandistas, materiais exclusivos, vídeo de ativação da pineal e conteúdos para fortalecer sua jornada espiritual.
       </p>
     </div>
 
