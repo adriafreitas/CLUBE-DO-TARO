@@ -14,7 +14,7 @@ export default function ResetPasswordPage() {
   const handleUpdatePassword = async () => {
     if (password !== confirmPassword) {
       setMessage("As senhas não coincidem.");
-      return;
+      return;f
     }
 
     if (password.length < 6) {
@@ -74,7 +74,7 @@ console.log("UPDATE ERROR:", error);
           {/* LOGO */}
           <div className="flex justify-center mb-4">
             <img
-              src="/logo-clube-do-taro.png"
+              src="/og-image.png"
               alt="Clube do Tarô"
               className="w-32 h-32 object-contain"
             />
