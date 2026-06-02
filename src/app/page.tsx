@@ -151,7 +151,7 @@ export default function Home() {
   <div className="absolute inset-0 rounded-[40px] bg-[#E7C96F]/30 blur-[90px]" />
 
   <Image
-    src="/imagens/adria-hero.png"
+    src="/imagens/adria-hero-metade.png"
     alt="Ádria Freitas"
     width={470}
     height={690}
