@@ -88,14 +88,7 @@ export default function Home() {
           className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03),transparent_45%)]"
         />
       </div>
-<div
-  className="absolute inset-0 opacity-20"
-  style={{
-    backgroundImage:
-      "radial-gradient(#ffffff 1px, transparent 1px)",
-    backgroundSize: "80px 80px",
-  }}
-/>
+
       {/* HERO */}
       <section className="mx-auto grid min-h-screen max-w-7xl items-center gap-10 px-6 md:grid-cols-2">
         <motion.div
