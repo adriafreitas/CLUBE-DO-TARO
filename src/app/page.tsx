@@ -176,8 +176,14 @@ export default function Home() {
     {/* CARD 1 */}
     <div className="group rounded-[32px] border border-[#E7C96F]/20 bg-gradient-to-b from-white/10 to-white/5 p-8 backdrop-blur-xl transition duration-500 hover:-translate-y-2 hover:border-[#E7C96F]/60 hover:shadow-[0_0_40px_rgba(231,201,111,0.15)]">
 
-      <div className="mb-6 text-[#E7C96F]">
-  <Sparkles size={56} />
+      <div className="mb-6">
+  <Image
+    src="/icons/tarot-card-gold.png"
+    alt="Leituras Mensais"
+    width={90}
+    height={90}
+    className="drop-shadow-[0_0_20px_rgba(231,201,111,0.4)]"
+  />
 </div>
 
       <h3 className="mb-4 font-serif text-3xl text-white">
@@ -194,9 +200,14 @@ export default function Home() {
     <div className="group rounded-[32px] border border-[#E7C96F]/20 bg-gradient-to-b from-white/10 to-white/5 p-8 backdrop-blur-xl transition duration-500 hover:-translate-y-2 hover:border-[#E7C96F]/60 hover:shadow-[0_0_40px_rgba(231,201,111,0.15)]">
 
 
-      <div className="mb-6 text-[#E7C96F]">
-  <Headphones size={56} />
-
+      <div className="mb-6">
+  <Image
+    src="/icons/gold-headphones.png"
+    alt="Áudios Exclusivos"
+    width={90}
+    height={90}
+    className="drop-shadow-[0_0_20px_rgba(231,201,111,0.4)]"
+  />
 </div>
 
       <h3 className="mb-4 font-serif text-3xl text-white">
@@ -212,8 +223,14 @@ export default function Home() {
     {/* CARD 3 */}
     <div className="group rounded-[32px] border border-[#E7C96F]/20 bg-gradient-to-b from-white/10 to-white/5 p-8 backdrop-blur-xl transition duration-500 hover:-translate-y-2 hover:border-[#E7C96F]/60 hover:shadow-[0_0_40px_rgba(231,201,111,0.15)]">
 
-      <div className="mb-6 text-[#E7C96F]">
-  <BookOpen size={56} />
+      <div className="mb-6">
+  <Image
+    src="/icons/magic-book.png"
+    alt="Biblioteca Mística"
+    width={90}
+    height={90}
+    className="drop-shadow-[0_0_20px_rgba(231,201,111,0.4)]"
+  />
 </div>
 
       <h3 className="mb-4 font-serif text-3xl text-white">
