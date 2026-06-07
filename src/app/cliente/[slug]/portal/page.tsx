@@ -426,69 +426,93 @@ leituras, áudios e conteúdos especiais.
 {junho && (
   <div
     style={{
-      background: "linear-gradient(180deg,#2a0738 0%, #1a001f 100%)",
-      border: "1px solid rgba(244,212,106,.15)",
-      borderRadius: "24px",
-      padding: "24px",
-      marginBottom: "15px",
+      display: "grid",
+      gap: "18px",
     }}
   >
-    <div
-      style={{
-        fontSize: "26px",
-        marginBottom: "10px",
-      }}
-    >
-      ✦ 1ª Semana
-    </div>
-
-    <div
-      style={{
-        color: "rgba(255,255,255,.65)",
-        marginBottom: "20px",
-      }}
-    >
-      01/06 a 07/06
-    </div>
-
-    <div
-      style={{
-        display: "flex",
-        gap: "12px",
-        flexWrap: "wrap",
-      }}
-    >
-      <button
-        onClick={abrirAudioJunho}
+    {semanasJunho.map((semana) => (
+      <div
+        key={semana.titulo}
         style={{
-          background: "linear-gradient(180deg,#7d1bb5,#5b0c8c)",
-          border: "none",
-          color: "#fff",
-          padding: "12px 22px",
-          borderRadius: "999px",
+          background:
+            "linear-gradient(180deg,#2a0738 0%, #1a001f 100%)",
+          border:
+            "1px solid rgba(244,212,106,.15)",
+          borderRadius: "24px",
+          padding: "24px",
         }}
       >
-        🎧 Ouvir Direcionamento
-      </button>
+        <div
+          style={{
+            fontSize: "26px",
+            marginBottom: "10px",
+          }}
+        >
+          ✦ {semana.titulo}
+        </div>
 
-      <button
-        onClick={baixarPdfJunho}
-        style={{
-          background: "rgba(244,212,106,.12)",
-          border: "1px solid rgba(244,212,106,.25)",
-          color: "#f4d46a",
-          padding: "12px 22px",
-          borderRadius: "999px",
-        }}
-      >
-        📥 Baixar Leitura Completa
-      </button>
-    </div>
+        <div
+          style={{
+            color: "rgba(255,255,255,.65)",
+            marginBottom: "20px",
+          }}
+        >
+          {semana.data}
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            gap: "12px",
+            flexWrap: "wrap",
+          }}
+        >
+          <button
+            onClick={() =>
+              abrirAudioJunho(
+                semana.semana,
+                semana.arquivo
+              )
+            }
+            style={{
+              background:
+                "linear-gradient(180deg,#7d1bb5,#5b0c8c)",
+              border: "none",
+              color: "#fff",
+              padding: "12px 22px",
+              borderRadius: "999px",
+            }}
+          >
+            🎧 Ouvir Direcionamento
+          </button>
+
+          <button
+            onClick={() =>
+              baixarPdfJunho(
+                semana.semana,
+                semana.arquivo
+              )
+            }
+            style={{
+              background:
+                "rgba(244,212,106,.12)",
+              border:
+                "1px solid rgba(244,212,106,.25)",
+              color: "#f4d46a",
+              padding: "12px 22px",
+              borderRadius: "999px",
+            }}
+          >
+            📥 Baixar Leitura Completa
+          </button>
+        </div>
+      </div>
+    ))}
   </div>
 )}
 
-</div>
-)}
+        </div>
+      )}
 
       <div
         onClick={() => setAno2027(!ano2027)}
@@ -500,11 +524,13 @@ leituras, áudios e conteúdos especiais.
           cursor: "pointer",
           marginTop: "20px",
         }}
-      >
+            >
         {ano2027 ? "▼" : "▶"} Ano 2027
       </div>
+
     </div>
   </div>
+
 {audioAberto && (
   <div
     style={{
