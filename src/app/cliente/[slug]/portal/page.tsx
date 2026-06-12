@@ -656,7 +656,7 @@ leituras, áudios e conteúdos especiais.
 <textarea
   value={pergunta}
   onChange={(e) => setPergunta(e.target.value)}
-  placeholder="Digite sua pergunta para a Cigana Ádria..."
+  placeholder="Digite sua pergunta para a Cigana Estella..."
   rows={6}
   style={{
     width: "100%",
