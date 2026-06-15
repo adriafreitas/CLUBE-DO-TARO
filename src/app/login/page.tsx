@@ -30,10 +30,10 @@ async function login(e: React.FormEvent) {
   const emailUsuario = data.user?.email;
 
   const { data: clienteData, error: errorCliente } = await supabase
-    .from("club_clients")
-    .select("slug,status")
-    .eq("email", emailUsuario)
-    .single();
+  .from("club_clients")
+  .select("slug,status,role")
+  .eq("email", emailUsuario)
+  .single();
 
   if (errorCliente || !clienteData?.slug) {
     alert("Cliente não encontrado.");
@@ -41,7 +41,11 @@ async function login(e: React.FormEvent) {
     return;
   }
 
+  if (clienteData.role === "admin") {
+  window.location.href = "/admin/assinantes";
+} else {
   window.location.href = `/cliente/${clienteData.slug}/portal`;
+}
 }
 
 async function resetSenha() {
