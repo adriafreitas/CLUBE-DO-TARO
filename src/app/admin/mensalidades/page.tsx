@@ -1,7 +1,12 @@
 export default function MensalidadesPage() {
   return (
-    <div>
-      <h1>Mensalidades</h1>
+    <div
+      style={{
+        padding: "40px",
+        color: "#fff",
+      }}
+    >
+      💳 Minhas Mensalidades
     </div>
   );
 }
