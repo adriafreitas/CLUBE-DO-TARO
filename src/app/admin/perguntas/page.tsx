@@ -38,15 +38,25 @@ export default function Page() {
         <h2>Perguntas</h2>
 
         {perguntas.map((pergunta) => (
-          <div
-            key={pergunta.id}
-            onClick={() => setSelecionada(pergunta)}
-            style={{
-              padding: "12px",
-              cursor: "pointer",
-              borderBottom: "1px solid #222",
-            }}
-          >
+  <div
+    key={pergunta.id}
+    onClick={() => setSelecionada(pergunta)}
+    style={{
+      padding: "12px",
+      cursor: "pointer",
+      borderBottom: "1px solid #222",
+      borderRadius: "8px",
+      marginBottom: "8px",
+      background:
+        selecionada?.id === pergunta.id
+          ? "#2a1d00"
+          : "transparent",
+      border:
+        selecionada?.id === pergunta.id
+          ? "1px solid #f4d46a"
+          : "1px solid transparent",
+    }}
+  >
             <strong>
               {pergunta.nome_cliente}
             </strong>
