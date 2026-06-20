@@ -9,7 +9,9 @@ type Course = {
   titulo: string;
   descricao: string;
   imagem_url: string;
-  link_compra: string;
+  link_compra?: string;
+  link_publico?: string;
+  link_assinante?: string;
   valor_publico?: number;
   valor_assinante?: number;
 };
