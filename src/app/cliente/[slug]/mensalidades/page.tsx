@@ -121,7 +121,7 @@ const diasRestantesAnual = Math.ceil(
           padding: "30px",
         }}
       >
-        {tipoAssinatura === "anual" ? (
+        {false ? (
   <>
     <h2
       style={{
