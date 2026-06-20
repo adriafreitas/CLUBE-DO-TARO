@@ -173,7 +173,7 @@ seu plano de assinatura.
 
    {/* CARD 1 */}
 <a
-  href="/"
+  href="/cursos"
   className="group block rounded-[32px] border border-[#E7C96F]/20 bg-gradient-to-b from-white/10 to-white/5 p-8 backdrop-blur-xl transition duration-500 hover:-translate-y-2 hover:border-[#E7C96F]/60 hover:shadow-[0_0_40px_rgba(231,201,111,0.15)]"
 >
   <div className="mb-6">
