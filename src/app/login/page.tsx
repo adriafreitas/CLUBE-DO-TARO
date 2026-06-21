@@ -9,22 +9,22 @@ const [senha, setSenha] = useState("");
 const [mostrarSenha, setMostrarSenha] = useState(false);
 const [loading, setLoading] = useState(false);
 
-async function login(e: React.FormEvent) {
-  e.preventDefault();
+async function resetSenha() {
+  if (!email) {
+    alert("Digite seu e-mail primeiro.");
+    return;
+  }
 
-  setLoading(true);
-
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password: senha,
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: "https://www.magiaoriente.com.br/auth/reset-password",
   });
 
   if (error) {
-  alert("Não foi possível realizar o login. Verifique seu e-mail e senha.");
+    alert("Não foi possível enviar o e-mail de recuperação.");
+    return;
+  }
 
-  console.error(error);
-  setLoading(false);
-  return;
+  alert("Enviamos o link para seu e-mail. Abra o link para criar uma nova senha.");
 }
 
   const emailUsuario = data.user?.email;
