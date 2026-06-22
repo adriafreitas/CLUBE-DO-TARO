@@ -4,6 +4,164 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
+const CONTEUDOS: Record<
+  string,
+  {
+    nome: string;
+    audio: string;
+    pdf: string;
+  }
+> = {
+  evelyn: {
+    nome: "Evelyn",
+    audio:
+      "https://drive.google.com/file/d/1Wx4oWQZX8zTUzvywcWnUe9ofxeqVy_6H/preview",
+    pdf: "https://drive.google.com/file/d/18kJceaXvQNOlB_GgxX4Ah2f0xoH_LAIs/view",
+  },
+  bianca: {
+    nome: "Bianca",
+    audio:
+      "https://drive.google.com/file/d/1rH2rxxj64LsZIbAcjDXwoCAgxlnBvmqy/preview",
+    pdf: "https://drive.google.com/file/d/1wSENHfWAJu8szOIshu0tpFx0HcdoVtxs/view",
+  },
+  carolmorena: {
+    nome: "Carol Morena",
+    audio:
+      "https://drive.google.com/file/d/1QRpWB6NSy78EIPhKw1LWp1hXANiguHrM/preview",
+    pdf: "https://drive.google.com/file/d/1zntmmB7YREXRhHdBq1rJuiIY2gaNomHn/view",
+  },
+  carolruiva: {
+    nome: "Carol Ruiva",
+    audio:
+      "https://drive.google.com/file/d/1JujrMkief5np5TWCJC9v7NPGNsCaJH8t/preview",
+    pdf: "https://drive.google.com/file/d/1xa2757gj8cuvEfZCYhMWOxDDIOfp86Up/view",
+  },
+  claudinho: {
+    nome: "Claudinho",
+    audio:
+      "https://drive.google.com/file/d/16KSkZ96o1G6AC4kevuJ2v39w4WHKTtkD/preview",
+    pdf: "https://drive.google.com/file/d/1gYPQsoJEsQubWpxegDFzKJr4HqioZ2X1/view",
+  },
+  cris: {
+    nome: "Cris",
+    audio:
+      "https://drive.google.com/file/d/1c3NBP069JYwQACl93iSKoy5JbX6qMY6t/preview",
+    pdf: "https://drive.google.com/file/d/1y7Xtz6NmyxJ2I83Q614w5X8lNs0K2FGr/view",
+  },
+  dani: {
+    nome: "Dani",
+    audio:
+      "https://drive.google.com/file/d/13e79xfIAFMivPVR7e3TLyrF4Fv_JM4Hx/preview",
+    pdf: "https://drive.google.com/file/d/1qQxXH3jzCePK8lpMT_e2L-YqfEAs32ke/view",
+  },
+  dorinha: {
+    nome: "Dorinha",
+    audio:
+      "https://drive.google.com/file/d/1khXIkV35Erh-xpH3VasuYFxDwu0XZV_C/preview",
+    pdf: "https://drive.google.com/file/d/1JNEN8Q1K9UW02PUamxxFVbOWdq6jLUPu/view",
+  },
+  fefe: {
+    nome: "Fefe",
+    audio:
+      "https://drive.google.com/file/d/11uW-sRd82Y7ri24u3iGw0w7-EAZ0OImd/preview",
+    pdf: "https://drive.google.com/file/d/16ExZutoWCZjwb8sZL82R2TwM3pz5BO0T/view",
+  },
+  gabi: {
+    nome: "Gabi",
+    audio:
+      "https://drive.google.com/file/d/11L1qVrs8C1_qUz6B32P44XdidzuVTfTS/preview",
+    pdf: "https://drive.google.com/file/d/1sstnMOJRbhgC9Dgk-WTn4aUunFfOEqgr/view",
+  },
+  helena: {
+    nome: "Helena",
+    audio:
+      "https://drive.google.com/file/d/1ai2HUFJdii1gzwtJaWeTIKQY5oUamjmw/preview",
+    pdf: "https://drive.google.com/file/d/1svWxVxRJcgXWofGOczIYgVEj9_yI1Nyf/view",
+  },
+  lilian: {
+    nome: "Lilian",
+    audio:
+      "https://drive.google.com/file/d/1XzM5c0qwoPqcQl3ijWuz7TiaS4iljpMM/preview",
+    pdf: "https://drive.google.com/file/d/1hRGwtIP3lg6ODNBk_Of2uMx3RuYz4Fl0/view",
+  },
+  luana: {
+    nome: "Luana",
+    audio:
+      "https://drive.google.com/file/d/1XzM5c0qwoPqcQl3ijWuz7TiaS4iljpMM/preview",
+    pdf: "https://drive.google.com/file/d/1hRGwtIP3lg6ODNBk_Of2uMx3RuYz4Fl0/view",
+  },
+  natalia: {
+    nome: "Natalia",
+    audio:
+      "https://drive.google.com/file/d/1oMTU4IPpMYR7-2GdhRC2IyaQBI7ZNovT/preview",
+    pdf: "https://drive.google.com/file/d/1Nk-U3ZoGOWickUromyi0FY9sYChlNoWO/view",
+  },
+  neide: {
+    nome: "Neide",
+    audio:
+      "https://drive.google.com/file/d/1Dbuvl2mJu6c7UdVoSVd5Mzqvuh-dX-QM/preview",
+    pdf: "https://drive.google.com/file/d/1r6cS6F9goA6Oh_Ubgzji7BDbvOZlNdjV/view",
+  },
+  nathali: {
+    nome: "Nathali",
+    audio:
+      "https://drive.google.com/file/d/1ayZOL6lCR2cwy1Ef2zC75m2X3FEd4l86/preview",
+    pdf: "https://drive.google.com/file/d/1uCqB3YxkXj2IVQzOIU8RFWSkzdaS37CZ/view",
+  },
+  nena: {
+    nome: "Nena",
+    audio:
+      "https://drive.google.com/file/d/10u-hDHeqmjvb6ItF2pxDV5RMqrKP0CtY/preview",
+    pdf: "https://drive.google.com/file/d/1oRpKHoEgrumpCTud4nDTm0G9eRcSWskX/view",
+  },
+  rejiane: {
+    nome: "Rejiane",
+    audio:
+      "https://drive.google.com/file/d/1zRX3Pjj7Z9O0lfIRRMlP0Di7jPpoZeLx/preview",
+    pdf: "https://drive.google.com/file/d/1qOG0nHek9PN_BOZUCcRrV5YR2p1QCdSZ/view",
+  },
+  tamilly: {
+    nome: "Tamilly",
+    audio:
+      "https://drive.google.com/file/d/1LTD7r-ZRCGxyE1Bvvfs8VHS_YiwkplUM/preview",
+    pdf: "https://drive.google.com/file/d/14dm-Pafs-kmHpTvnwjdGlTGRProoqH_R/view",
+  },
+  vivi: {
+    nome: "Vivi",
+    audio:
+      "https://drive.google.com/file/d/1uOY-k_nnB70wYdeyZMymlL4pn9x_gI0S/preview",
+    pdf: "https://drive.google.com/file/d/1HS4_ceSClB5TUTic61qdVH7fL0w_GFsO/view",
+  },
+};
+
+/*
+  COLE AQUI OS LINKS QUE VOCÊ JÁ TEM.
+
+  Cada áudio precisa ser o link do ARQUIVO MP3, terminando em /preview.
+  Cada PDF precisa ser o link do PDF, terminando em /view.
+*/
+const AUDIOS_JUNHO: Record<string, Record<string, string>> = {
+  cris: {
+    "semana-1": "",
+    "semana-2": "",
+    "semana-3": "",
+    "semana-4":
+      "https://drive.google.com/file/d/1c3NBP069JYwQACl93iSKoy5JbX6qMY6t/preview",
+    "semana-5": "",
+  },
+};
+
+const PDFS_JUNHO: Record<string, Record<string, string>> = {
+  cris: {
+    "semana-1": "",
+    "semana-2": "",
+    "semana-3": "",
+    "semana-4":
+      "https://drive.google.com/file/d/1y7Xtz6NmyxJ2I83Q614w5X8lNs0K2FGr/view",
+    "semana-5": "",
+  },
+};
+
 export default function PortalPremium() {
   const params = useParams();
   const slug = params.slug as string;
@@ -14,13 +172,13 @@ export default function PortalPremium() {
 
   const [audioAberto, setAudioAberto] = useState(false);
   const [audioUrl, setAudioUrl] = useState("");
+
   const [direcionamentoAberto, setDirecionamentoAberto] = useState(false);
   const [categoria, setCategoria] = useState("");
   const [pergunta, setPergunta] = useState("");
 
   const [tituloGuardiao, setTituloGuardiao] = useState("Guardiã");
   const [nome, setNome] = useState("");
-  const [clienteId, setClienteId] = useState("");
   const [plano, setPlano] = useState("");
   const [dataInicio, setDataInicio] = useState<string | null>(null);
 
@@ -35,15 +193,14 @@ export default function PortalPremium() {
       try {
         const { data, error } = await supabase
           .from("club_clients")
-          .select("id, plano, data_inicio, nome, slug, genero")
+          .select("plano, data_inicio, nome, slug, genero")
           .eq("slug", slug)
           .single();
 
         if (error) throw new Error(error.message);
 
         if (data) {
-          setClienteId(data.id);
-          setPlano(data.plano);
+          setPlano(data.plano || "");
           setDataInicio(data.data_inicio);
           setNome(
             data.nome ||
@@ -100,9 +257,9 @@ export default function PortalPremium() {
     },
     {
       titulo: "5ª Semana",
-      data: "29/06 a 30/06",
+      data: "28/06 a 30/06",
       semana: "semana-5",
-      arquivo: "29-06",
+      arquivo: "28-06",
     },
   ];
 
@@ -115,32 +272,56 @@ export default function PortalPremium() {
       "semana-2": "2026-06-08",
       "semana-3": "2026-06-15",
       "semana-4": "2026-06-22",
-      "semana-5": "2026-06-29",
+      "semana-5": "2026-06-28",
     };
 
     return inicio <= new Date(datas[semana.semana]);
   });
 
-  function abrirAudio() {
-    const url = `https://xzvraybpzukrfaxmtkch.supabase.co/storage/v1/object/public/clientes/${clienteId}/clube-do-taro/2026/maio/semana-1-${slug}-03-05.mp3`;
+  function abrirAudioMaio() {
+    const conteudo = CONTEUDOS[slug];
+
+    if (!conteudo?.audio) {
+      alert("Áudio ainda não disponível para este portal.");
+      return;
+    }
+
+    setAudioUrl(conteudo.audio);
+    setAudioAberto(true);
+  }
+
+  function baixarPdfMaio() {
+    const conteudo = CONTEUDOS[slug];
+
+    if (!conteudo?.pdf) {
+      alert("PDF ainda não disponível para este portal.");
+      return;
+    }
+
+    window.open(conteudo.pdf, "_blank", "noopener,noreferrer");
+  }
+
+  function abrirAudioJunho(semana: string) {
+    const url = AUDIOS_JUNHO[slug]?.[semana];
+
+    if (!url) {
+      alert("Áudio desta semana ainda não está disponível.");
+      return;
+    }
+
     setAudioUrl(url);
     setAudioAberto(true);
   }
 
-  function baixarPdf() {
-    const url = `https://xzvraybpzukrfaxmtkch.supabase.co/storage/v1/object/public/clientes/${clienteId}/clube-do-taro/2026/maio/semana-1-${slug}-03-05.pdf`;
-    window.open(url, "_blank");
-  }
+  function baixarPdfJunho(semana: string) {
+    const url = PDFS_JUNHO[slug]?.[semana];
 
-  function abrirAudioJunho(semana: string, arquivo: string) {
-    const url = `https://xzvraybpzukrfaxmtkch.supabase.co/storage/v1/object/public/clientes/${clienteId}/clube-do-taro/2026/junho/${semana}-${slug}-${arquivo}.mp3`;
-    setAudioUrl(url);
-    setAudioAberto(true);
-  }
+    if (!url) {
+      alert("PDF desta semana ainda não está disponível.");
+      return;
+    }
 
-  function baixarPdfJunho(semana: string, arquivo: string) {
-    const url = `https://xzvraybpzukrfaxmtkch.supabase.co/storage/v1/object/public/clientes/${clienteId}/clube-do-taro/2026/junho/${semana}-${slug}-${arquivo}.pdf`;
-    window.open(url, "_blank");
+    window.open(url, "_blank", "noopener,noreferrer");
   }
 
   async function enviarPergunta() {
@@ -441,11 +622,11 @@ export default function PortalPremium() {
                               flexWrap: "wrap",
                             }}
                           >
-                            <button onClick={abrirAudio} style={botaoAudio}>
+                            <button onClick={abrirAudioMaio} style={botaoAudio}>
                               🎧 Ouvir Direcionamento
                             </button>
 
-                            <button onClick={baixarPdf} style={botaoPdf}>
+                            <button onClick={baixarPdfMaio} style={botaoPdf}>
                               📥 Baixar Leitura Completa
                             </button>
                           </div>
@@ -504,18 +685,14 @@ export default function PortalPremium() {
                         }}
                       >
                         <button
-                          onClick={() =>
-                            abrirAudioJunho(semana.semana, semana.arquivo)
-                          }
+                          onClick={() => abrirAudioJunho(semana.semana)}
                           style={botaoAudio}
                         >
                           🎧 Ouvir Direcionamento
                         </button>
 
                         <button
-                          onClick={() =>
-                            baixarPdfJunho(semana.semana, semana.arquivo)
-                          }
+                          onClick={() => baixarPdfJunho(semana.semana)}
                           style={botaoPdf}
                         >
                           📥 Baixar Leitura Completa
@@ -656,34 +833,62 @@ export default function PortalPremium() {
             justifyContent: "center",
             alignItems: "center",
             zIndex: 9999,
+            padding: "20px",
+            boxSizing: "border-box",
           }}
         >
           <div
             style={{
-              background: "#1a001f",
-              borderRadius: "24px",
-              padding: "30px",
-              width: "500px",
-              maxWidth: "90%",
-              border: "1px solid rgba(244,212,106,.25)",
+              width: "100%",
+              maxWidth: "620px",
+              background: "linear-gradient(145deg, #1a1a1b 0%, #161718 52%, #0a0b0c 100%)",
+              border: "1px solid rgba(244,212,106,.45)",
+              borderRadius: "22px",
+              padding: "24px",
+              boxSizing: "border-box",
             }}
           >
-            <h2 style={{ color: "#f4d46a", marginBottom: "20px" }}>
-              🔮 Direcionamento da Semana
-            </h2>
+            <h3
+              style={{
+                margin: "0 0 18px",
+                color: "#b48af8",
+                fontSize: "22px",
+              }}
+            >
+              🎧 Direcionamento da Semana
+            </h3>
 
-            <audio controls autoPlay src={audioUrl} style={{ width: "100%" }} />
+            <iframe
+  src={audioUrl}
+  title="Direcionamento da Semana"
+  width="100%"
+  height="140"
+  style={{
+    display: "block",
+    border: "1px solid rgba(255,255,255,.08)",
+    borderRadius: "16px",
+    background:
+      "linear-gradient(145deg, #4b4b4d 0%, #2f3033 48%, #202124 100%)",
+    boxShadow:
+      "inset 0 1px 0 rgb(255, 255, 255), 0 10px 25px rgba(0,0,0,.35)",
+  }}
+  allow="autoplay"
+/>
 
             <button
-              onClick={() => setAudioAberto(false)}
+              onClick={() => {
+                setAudioAberto(false);
+                setAudioUrl("");
+              }}
               style={{
-                marginTop: "20px",
-                background: "#5b0c8c",
+                marginTop: "18px",
+                background: "#400e91",
+                color: "#ffffff",
                 border: "none",
-                color: "#fff",
-                padding: "12px 20px",
                 borderRadius: "999px",
+                padding: "12px 20px",
                 cursor: "pointer",
+                fontWeight: 700,
               }}
             >
               Fechar
