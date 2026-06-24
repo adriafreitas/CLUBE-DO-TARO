@@ -65,10 +65,20 @@ export default function CursoPombagira() {
   const [audioUrl, setAudioUrl] = useState("");
 
   function abrirAula(index: number) {
-    setAulaAtiva(index);
-    setAudioUrl(AULAS[index].video);
-    setAudioAberto(true);
+  const aula = AULAS[index];
+
+  setAulaAtiva(index);
+
+  if (aula.video) {
+    setAudioUrl(aula.video);
+  } else if (aula.videos?.[0]?.url) {
+    setAudioUrl(aula.videos[0].url);
+  } else {
+    setAudioUrl("");
   }
+
+  setAudioAberto(true);
+}
 
   return (
     <main
