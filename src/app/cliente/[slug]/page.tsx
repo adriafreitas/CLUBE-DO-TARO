@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
@@ -12,7 +12,9 @@ type Cliente = {
   plano: string | null;
   tipo_assinatura: string | null;
   status: string | null;
+  genero: string | null;
 };
+
 
 const WHATSAPP_CLUBE_VIP =
   "https://chat.whatsapp.com/EjjKI3FQSkvE2YIzU5GORp";

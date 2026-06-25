@@ -8,22 +8,24 @@ type Cliente = {
   nome: string | null;
   slug: string;
   plano: string | null;
-  status: string | null;
   tipo_assinatura: string | null;
+  status: string | null;
+  genero: string | null;
+  metodo_pagamento: string | null;
   dia_vencimento: number | null;
   proximo_vencimento: string | null;
   ultimo_pagamento: string | null;
-  ultimo_valor_pago: number | null;
   status_pagamento: string | null;
+  valor_mensal_personalizado: number | null;
+  valor_anual_personalizado: number | null;
+  valor_mensal: number | null;
+  valor_anual: number | null;
+  data_inicio: string | null;
   data_fim_assinatura: string | null;
   cortesia_inicio: string | null;
   cortesia_fim: string | null;
-  valor_mensal: number | null;
-  valor_anual: number | null;
-  valor_mensal_personalizado: number | null;
-  valor_anual_personalizado: number | null;
-  metodo_pagamento: string | null;
 };
+
 type SolicitacaoFinanceira = {
   id: string;
   client_id: string;
@@ -171,6 +173,9 @@ function calcularSituacao(cliente: Cliente) {
 export default function FinanceiroAdminPage() {
   const [clientes, setClientes] = useState<Cliente[]>([]);
   const [carregando, setCarregando] = useState(true);
+  const [carregandoSolicitacoes, setCarregandoSolicitacoes] = useState(true);
+  const [solicitacoes, setSolicitacoes] = useState<SolicitacaoFinanceira[]>([]);
+  const [processandoSolicitacao, setProcessandoSolicitacao] = useState<string | null>(null);
   const [busca, setBusca] = useState("");
   const [clienteEditando, setClienteEditando] = useState<Cliente | null>(null);
   const [salvandoEdicao, setSalvandoEdicao] = useState(false);
@@ -301,7 +306,7 @@ async function carregarSolicitacoes() {
     return;
   }
 
-  setSolicitacoes((data || []) as SolicitacaoFinanceira[]);
+  setSolicitacoes((data || []) as unknown as SolicitacaoFinanceira[]);
   setCarregandoSolicitacoes(false);
 }
 
