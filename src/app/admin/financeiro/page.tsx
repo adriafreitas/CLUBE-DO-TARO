@@ -24,7 +24,24 @@ type Cliente = {
   valor_anual_personalizado: number | null;
   metodo_pagamento: string | null;
 };
-
+type SolicitacaoFinanceira = {
+  id: string;
+  client_id: string;
+  request_type:
+    | "alterar_vencimento"
+    | "adiar_vencimento"
+    | "pagamento_parcial";
+  requested_due_date: string | null;
+  partial_amount: number | null;
+  message: string | null;
+  status: "pending" | "approved" | "rejected";
+  admin_note: string | null;
+  created_at: string;
+  club_clients: {
+    nome: string | null;
+    slug: string;
+  } | null;
+};
 const planos = ["bronze", "prata", "ouro", "diamante", "cortesia"] as const;
 
 const nomesPlanos: Record<(typeof planos)[number], string> = {
@@ -79,6 +96,7 @@ function calcularSituacao(cliente: Cliente) {
         classe: "bg-red-500/20 text-red-200 border-red-400/40",
       };
     }
+
 
     return {
       texto: `Cortesia: ${dias} dia(s)`,
@@ -253,6 +271,94 @@ export default function FinanceiroAdminPage() {
     setMetodoPagamentoEdicao(cliente.metodo_pagamento || "infinitepay");
     setMesesCortesia("1");
   }
+
+async function carregarSolicitacoes() {
+  setCarregandoSolicitacoes(true);
+
+  const { data, error } = await supabase
+    .from("financial_requests")
+    .select(`
+      id,
+      client_id,
+      request_type,
+      requested_due_date,
+      partial_amount,
+      message,
+      status,
+      admin_note,
+      created_at,
+      club_clients (
+        nome,
+        slug
+      )
+    `)
+    .eq("status", "pending")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Erro ao carregar solicitações:", error);
+    setCarregandoSolicitacoes(false);
+    return;
+  }
+
+  setSolicitacoes((data || []) as SolicitacaoFinanceira[]);
+  setCarregandoSolicitacoes(false);
+}
+
+async function responderSolicitacao(
+  solicitacao: SolicitacaoFinanceira,
+  resposta: "approved" | "rejected"
+) {
+  setProcessandoSolicitacao(solicitacao.id);
+
+  const { error: erroSolicitacao } = await supabase
+    .from("financial_requests")
+    .update({
+      status: resposta,
+      resolved_at: new Date().toISOString(),
+    })
+    .eq("id", solicitacao.id);
+
+  if (erroSolicitacao) {
+    alert(`Erro ao atualizar solicitação: ${erroSolicitacao.message}`);
+    setProcessandoSolicitacao(null);
+    return;
+  }
+
+  if (
+    resposta === "approved" &&
+    solicitacao.request_type === "adiar_vencimento" &&
+    solicitacao.requested_due_date
+  ) {
+    const novoDia = Number(solicitacao.requested_due_date.slice(8, 10));
+
+    await supabase
+      .from("club_clients")
+      .update({
+        proximo_vencimento: solicitacao.requested_due_date,
+        dia_vencimento: novoDia,
+        status_pagamento: "em_dia",
+      })
+      .eq("id", solicitacao.client_id);
+  }
+
+  if (
+    resposta === "approved" &&
+    solicitacao.request_type === "pagamento_parcial"
+  ) {
+    await supabase
+      .from("club_clients")
+      .update({
+        status_pagamento: "negociacao",
+      })
+      .eq("id", solicitacao.client_id);
+  }
+
+  setProcessandoSolicitacao(null);
+  await carregarSolicitacoes();
+  await carregarClientes();
+}
+
 async function salvarEdicao() {
   if (!clienteEditando) return;
 
@@ -266,11 +372,23 @@ async function salvarEdicao() {
     return;
   }
 
+  const valorInformado = valorEdicao
+    ? Number(valorEdicao.replace(",", "."))
+    : null;
+
+  if (
+    (tipoEdicao === "mensal" || tipoEdicao === "anual") &&
+    (valorInformado === null || Number.isNaN(valorInformado))
+  ) {
+    alert("Informe um valor válido.");
+    return;
+  }
+
   setSalvandoEdicao(true);
 
   const hoje = new Date();
   const hojeTexto = hoje.toISOString().slice(0, 10);
-  const meses = Number(mesesCortesia || 1);
+  const meses = Math.max(1, Number(mesesCortesia || 1));
 
   const fimCortesia = new Date(
     hoje.getFullYear(),
@@ -280,10 +398,6 @@ async function salvarEdicao() {
     .toISOString()
     .slice(0, 10);
 
-  const valorInformado = valorEdicao
-    ? Number(valorEdicao.replace(",", "."))
-    : null;
-
   const dadosAtualizados: Record<string, unknown> = {
     plano: planoEdicao,
     tipo_assinatura: tipoEdicao,
@@ -291,38 +405,32 @@ async function salvarEdicao() {
 
     dia_vencimento:
       tipoEdicao === "mensal" && proximoVencimentoEdicao
-        ? Number(proximoVencimentoEdicao.split("-")[2])
+        ? Number(proximoVencimentoEdicao.slice(8, 10))
         : null,
 
     proximo_vencimento:
-      tipoEdicao === "mensal"
-        ? proximoVencimentoEdicao
-        : null,
+      tipoEdicao === "mensal" ? proximoVencimentoEdicao : null,
 
     data_fim_assinatura:
-      tipoEdicao === "anual"
-        ? fimAnualEdicao
-        : null,
+      tipoEdicao === "anual" ? fimAnualEdicao : null,
 
     cortesia_inicio:
-      tipoEdicao === "cortesia"
-        ? hojeTexto
-        : null,
+      tipoEdicao === "cortesia" ? hojeTexto : null,
 
     cortesia_fim:
-      tipoEdicao === "cortesia"
-        ? fimCortesia
-        : null,
+      tipoEdicao === "cortesia" ? fimCortesia : null,
+
+    valor_mensal:
+      tipoEdicao === "mensal" ? valorInformado : null,
+
+    valor_anual:
+      tipoEdicao === "anual" ? valorInformado : null,
 
     valor_mensal_personalizado:
-      tipoEdicao === "mensal"
-        ? valorInformado
-        : null,
+      tipoEdicao === "mensal" ? valorInformado : null,
 
     valor_anual_personalizado:
-      tipoEdicao === "anual"
-        ? valorInformado
-        : null,
+      tipoEdicao === "anual" ? valorInformado : null,
 
     status_pagamento:
       tipoEdicao === "cortesia"
@@ -332,14 +440,17 @@ async function salvarEdicao() {
           : "pendente",
   };
 
+  console.log("DADOS QUE SERÃO SALVOS:", dadosAtualizados);
+
   const { error } = await supabase
-    .from("club_clients")
-    .update(dadosAtualizados)
-    .eq("id", clienteEditando.id);
+  .from("club_clients")
+  .update(dadosAtualizados)
+  .eq("id", clienteEditando.id);
 
   setSalvandoEdicao(false);
 
   if (error) {
+    console.error("ERRO AO SALVAR:", error);
     alert(`Erro ao salvar: ${error.message}`);
     return;
   }
@@ -350,13 +461,34 @@ async function salvarEdicao() {
 }
 
 async function registrarPagamento(cliente: Cliente) {
-  const hoje = new Date().toISOString().slice(0, 10);
+  if (!confirm(`Confirmar pagamento de ${cliente.nome}?`)) return;
+
+  const hoje = new Date();
+  const hojeTexto = hoje.toISOString().slice(0, 10);
+
+  const base = cliente.proximo_vencimento
+    ? new Date(`${cliente.proximo_vencimento}T12:00:00`)
+    : hoje;
+
+  const proximo = new Date(
+    base.getFullYear(),
+    base.getMonth() + 1,
+    cliente.dia_vencimento || base.getDate()
+  );
+
+  const proximoTexto = [
+    proximo.getFullYear(),
+    String(proximo.getMonth() + 1).padStart(2, "0"),
+    String(proximo.getDate()).padStart(2, "0"),
+  ].join("-");
 
   const { error } = await supabase
     .from("club_clients")
     .update({
-      ultimo_pagamento: hoje,
+      ultimo_pagamento: hojeTexto,
       status_pagamento: "em_dia",
+      proximo_vencimento:
+        cliente.tipo_assinatura === "mensal" ? proximoTexto : cliente.proximo_vencimento,
     })
     .eq("id", cliente.id);
 
@@ -365,6 +497,7 @@ async function registrarPagamento(cliente: Cliente) {
     return;
   }
 
+  alert(`Pagamento registrado. Próximo vencimento: ${formatarData(proximoTexto)}`);
   await carregarClientes();
 }
 
@@ -377,9 +510,22 @@ if (carregando) {
 }
 
   return (
+    
     <main className="min-h-screen bg-[#08070f] px-5 py-8 text-white md:px-10">
       <div className="mx-auto max-w-7xl">
-        <p className="text-sm text-purple-300">Administração do Clube do Tarô</p>
+  
+  <button
+    type="button"
+    onClick={() => window.history.back()}
+    className="mb-5 rounded-xl border border-yellow-500/50 px-4 py-2 text-sm font-bold text-yellow-300 transition hover:bg-yellow-500/10"
+  >
+    ← Voltar à página anterior
+  </button>
+
+  <p className="text-sm text-purple-300">
+    Administração do Clube do Tarô
+  
+  </p>
 
         <h1 className="mt-1 text-3xl font-extrabold text-yellow-400">
           💳 Financeiro das Assinantes
