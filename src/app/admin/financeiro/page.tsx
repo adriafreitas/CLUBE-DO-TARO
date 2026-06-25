@@ -191,7 +191,7 @@ export default function FinanceiroAdminPage() {
     useState("infinitepay");
 
   const [planosAbertos, setPlanosAbertos] = useState<Record<string, boolean>>({
-    bronze: true,
+    bronze: false,
     prata: false,
     ouro: false,
     diamante: false,
