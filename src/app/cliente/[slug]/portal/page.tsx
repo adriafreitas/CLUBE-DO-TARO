@@ -610,19 +610,19 @@ function baixarPdfJunho(semana: string) {
             </button>
 
             <button
-              onClick={() => (window.location.href = "/minha-area")}
-              style={{
-                background: "#d4af37",
-                border: "none",
-                color: "#1a001a",
-                padding: "10px 16px",
-                borderRadius: "999px",
-                cursor: "pointer",
-                fontWeight: 800,
-              }}
-            >
-              📚 Meus Cursos
-            </button>
+  onClick={() => (window.location.href = `/cliente/${slug}/cursos`)}
+  style={{
+    background: "#d4af37",
+    border: "none",
+    color: "#1a001a",
+    padding: "10px 16px",
+    borderRadius: "999px",
+    cursor: "pointer",
+    fontWeight: 800,
+  }}
+>
+  📚 Meus Cursos
+</button>
 
             <button
   onClick={() => {
