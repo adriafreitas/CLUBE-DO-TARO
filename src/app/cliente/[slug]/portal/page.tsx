@@ -610,7 +610,7 @@ function baixarPdfJunho(semana: string) {
             </button>
 
             <button
-  onClick={() => (window.location.href = `/cliente/${slug}/cursos`)}
+  onClick={() => (window.location.href = "/cursos/pombagira")}
   style={{
     background: "#d4af37",
     border: "none",
