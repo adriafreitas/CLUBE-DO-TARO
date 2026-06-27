@@ -609,20 +609,12 @@ function baixarPdfJunho(semana: string) {
               💳 Meus Pagamentos
             </button>
 
-           <button
-  onClick={() => (window.location.href = "/cursos/pombagira")}
-  style={{
-    background: "#d4af37",
-    border: "none",
-    color: "#1a001a",
-    padding: "10px 16px",
-    borderRadius: "999px",
-    cursor: "pointer",
-    fontWeight: 800,
-  }}
+           <Link
+  href="/cursos/pombagira"
+  className="rounded-xl px-4 py-3 text-sm font-semibold text-white transition hover:bg-purple-800/40"
 >
   📚 Meus Cursos
-</button>
+</Link>
 
             <button
   onClick={() => {

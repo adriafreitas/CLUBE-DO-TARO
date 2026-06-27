@@ -132,7 +132,7 @@ const tituloGuardiao = ehHomem ? "Guardião" : "Guardiã";
               href={`/cliente/${slug}/bonus`}
               className="rounded-xl px-4 py-3 text-sm font-semibold text-white transition hover:bg-purple-800/40"
             >
-              🎁 Seus Bônus
+              🎁 
             </Link>
 
             <Link
@@ -168,7 +168,7 @@ const tituloGuardiao = ehHomem ? "Guardião" : "Guardiã";
             </Link>
 
 <Link
-  href="/cursos"
+  href="/cursos/pombagira"
   className="rounded-xl px-4 py-3 text-sm font-semibold text-white transition hover:bg-purple-800/40"
 >
   📚 Meus Cursos
@@ -226,7 +226,7 @@ const tituloGuardiao = ehHomem ? "Guardião" : "Guardiã";
               >
                 <p className="text-3xl">🎁</p>
                 <h3 className="mt-4 text-xl font-extrabold text-yellow-400">
-                  Seus Bônus
+                  
                 </h3>
                 <p className="mt-3 text-sm leading-6 text-purple-100">
                   Veja seus benefícios, conteúdos liberados e presentes da sua
