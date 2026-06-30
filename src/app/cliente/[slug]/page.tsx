@@ -205,7 +205,7 @@ const tituloGuardiao = ehHomem ? "Guardião" : "Guardiã";
 </Link>
 
 <Link
-  href="https://cursos-adria-freitas.vercel.app/login"
+  href="https://cursos-adria-freitas-j3ox.vercel.app/"
   target="_blank"
   rel="noopener noreferrer"
   className="rounded-2xl border border-purple-500/30 bg-[#19172f] p-6 shadow-xl transition hover:-translate-y-1 hover:border-yellow-400/60"
