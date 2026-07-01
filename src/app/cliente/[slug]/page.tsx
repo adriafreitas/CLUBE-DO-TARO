@@ -205,7 +205,7 @@ const tituloGuardiao = ehHomem ? "Guardião" : "Guardiã";
               <Link
 
 
-  href={`https://cursos.magiaoriente.com.br?slug=${slug}`}
+  href={`https://cursos.magiaoriente.com.br/meus-cursos?slug=${slug}`}
   
   className="rounded-2xl border border-purple-500/30 bg-[#19172f] p-6 shadow-xl transition hover:-translate-y-1 hover:border-yellow-400/60"
 >
