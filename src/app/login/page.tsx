@@ -34,14 +34,9 @@ export default function LoginPage() {
 
     const { data: clienteData } = await supabase
       .from("club_clients")
-      .select("slug, status, role")
+      .select("slug, status, role, produto")
       .eq("email", emailUsuario)
       .maybeSingle();
-
-    if (clienteData?.role === "admin") {
-      window.location.href = "/admin";
-      return;
-    }
 
    if (clienteData?.slug) {
   if (clienteData.status !== "ativo") {
@@ -53,18 +48,22 @@ export default function LoginPage() {
     return;
   }
 
- window.location.href = `/cliente/${clienteData.slug}`;
+  if (clienteData.produto === "Cursos") {
+    window.location.href = `/minha-area-alunos-externos?slug=${clienteData.slug}`;
+    return;
+  }
+
+  window.location.href = `/cliente/${clienteData.slug}`;
   return;
 }
-
     const { data: alunoData } = await supabase
-      .from("course_students")
-      .select("id, status")
-      .eq("id", data.user.id)
-      .maybeSingle();
+  .from("course_students")
+  .select("id, status")
+  .ilike("email", emailUsuario)
+  .maybeSingle();
 
     if (alunoData?.id && alunoData.status === "ativo") {
-      window.location.href = "/minha-area";
+      window.location.href = "/minha-area-alunos-externos";
       return;
     }
 

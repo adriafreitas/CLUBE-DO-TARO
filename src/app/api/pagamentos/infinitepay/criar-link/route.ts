@@ -106,13 +106,30 @@ export async function POST(request: Request) {
     }
 
     await supabaseAdmin
-      .from("infinitepay_orders")
-      .update({ checkout_url: dados.url })
-      .eq("order_nsu", orderNsu);
+  .from("infinitepay_orders")
+  .insert({
+    order_nsu: orderNsu,
+    produto_id: produtoId,
+    descricao: produto.descricao,
+    valor: produto.preco,
+    moeda: "BRL",
+    status: "pendente",
+    checkout_url: checkout.url,
 
+    cliente_nome: nome,
+    cliente_email: email,
+    cliente_telefone: telefone,
+  });
+  
+const { data: pedidoCompleto } = await supabaseAdmin
+  .from("infinitepay_orders")
+  .select("*")
+  .eq("order_nsu", orderNsu)
+  .single();
     return NextResponse.json({
       url: dados.url,
       orderNsu,
+      pedido: pedidoCompleto,
     });
   } catch (error) {
     console.error("Erro ao criar checkout:", error);

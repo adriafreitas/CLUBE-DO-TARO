@@ -74,7 +74,7 @@ export default function MeusCursosPage() {
             fontWeight: 700,
           }}
         >
-          ← Voltar ao Portal
+          ← Voltar 
         </Link>
 
         <h1
