@@ -30,7 +30,7 @@ export default function LoginPage() {
       return;
     }
 
-    const emailUsuario = data.user.email;
+    const emailUsuario = data.user?.email ?? "";
 
     const { data: clienteData } = await supabase
       .from("club_clients")

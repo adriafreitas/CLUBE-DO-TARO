@@ -114,13 +114,11 @@ export async function POST(request: Request) {
     valor: produto.preco,
     moeda: "BRL",
     status: "pendente",
-    checkout_url: checkout.url,
+    checkout_url: dados.url,
 
-    cliente_nome: nome,
-    cliente_email: email,
-    cliente_telefone: telefone,
   });
-  
+
+
 const { data: pedidoCompleto } = await supabaseAdmin
   .from("infinitepay_orders")
   .select("*")
