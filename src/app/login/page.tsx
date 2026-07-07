@@ -33,18 +33,26 @@ export default function LoginPage() {
     const emailUsuario = data.user?.email ?? "";
 
     const { data: clienteData } = await supabase
-      .from("club_clients")
-      .select("slug, status, role, produto")
-      .eq("email", emailUsuario)
-      .maybeSingle();
+  .from("club_clients")
+  .select("*")
+  .eq("email", emailUsuario)
+  .maybeSingle();
+
+console.log(clienteData);
 
    if (clienteData?.slug) {
+
   if (clienteData.status !== "ativo") {
     await supabase.auth.signOut();
     alert(
       "Seu acesso está temporariamente indisponível. Entre em contato com o Clube do Tarô."
     );
     setLoading(false);
+    return;
+  }
+
+  if (clienteData.role === "admin") {
+    window.location.href = "/admin";
     return;
   }
 
