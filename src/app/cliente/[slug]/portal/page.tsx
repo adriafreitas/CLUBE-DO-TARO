@@ -253,7 +253,11 @@ function abrirAudio(mes: string, semana: string) {
     return;
   }
 
+  console.log("PDF encontrado:", conteudo);
+
+  window.open(conteudo.drive_file, "_blank");
 }
+
 if (loading) {
   return <div>Carregando...</div>;
 }
