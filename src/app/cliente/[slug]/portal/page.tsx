@@ -253,7 +253,11 @@ function abrirAudio(mes: string, semana: string) {
     return;
   }
 
-  console.log("PDF encontrado:", conteudo);
+  console.log("===== PDF =====");
+  console.log(conteudo);
+  console.log("LINK:", conteudo.drive_file);
+
+  alert(conteudo.drive_file);
 
   window.open(conteudo.drive_file, "_blank");
 }
