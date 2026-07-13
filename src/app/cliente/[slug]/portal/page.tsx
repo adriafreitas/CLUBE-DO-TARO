@@ -782,15 +782,15 @@ return (
 
     const { error } = await supabase
       .from("exclusive_questions")
-      .insert({
+     .insert({
   slug,
-  nome,
+  nome_cliente: nome,
   plano,
   categoria,
   pergunta,
   urgente,
   referencia_mes: new Date().toISOString().slice(0, 7),
-  status: "pendente",
+  status: "Pendente",
 });
 
    if (error) {
