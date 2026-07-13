@@ -5,18 +5,37 @@ import { usePathname } from "next/navigation";
 
 const menu = [
   { href: "/admin", icon: "🏠", label: "Dashboard" },
+
   { href: "/admin/assinantes", icon: "👥", label: "Assinantes" },
+
   { href: "/admin/financeiro", icon: "💳", label: "Financeiro" },
+
   { href: "/admin/perguntas", icon: "📩", label: "Perguntas" },
-  { href: "/admin/direcionamentos", icon: "🔮", label: "Direcionamentos" },
+
+  { href: "/admin/direcionamentos", icon: "🎧", label: "Direcionamentos Semanais" },
+
+  {
+    href: "/admin/direcionamentos-exclusivos",
+    icon: "🔮",
+    label: "Direcionamentos Exclusivos",
+  },
+
   { href: "/admin/recados", icon: "📢", label: "Recados" },
+
   { href: "/admin/beneficios", icon: "🎁", label: "Benefícios" },
-  { href: "/admin/indicacoes", icon: "🎁", label: "Indicações" },
+
+  { href: "/admin/indicacoes", icon: "🤝", label: "Indicações" },
+
   { href: "/admin/sorteios", icon: "🍀", label: "Sorteios" },
+
   { href: "/admin/convites", icon: "🌞", label: "Convites" },
+
   { href: "/admin/aniversarios", icon: "🎂", label: "Aniversários" },
+
   { href: "/admin/cursos", icon: "📚", label: "Cursos" },
+
   { href: "/admin/biblioteca", icon: "📖", label: "Biblioteca Ádria Freitas" },
+
   { href: "/admin/configuracoes", icon: "⚙️", label: "Configurações" },
 ];
 

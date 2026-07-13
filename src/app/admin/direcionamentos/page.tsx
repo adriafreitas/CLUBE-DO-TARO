@@ -15,7 +15,7 @@ export default function DirecionamentosPage() {
 
   return (
     <div style={{ padding: "30px", color: "#fff" }}>
-      <h1>📩 Direcionamentos</h1>
+      <h1>🔮 Direcionamentos Exclusivos</h1>
 
       <div
         style={{
