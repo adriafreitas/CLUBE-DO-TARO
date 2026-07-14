@@ -15,10 +15,10 @@ const menu = [
   { href: "/admin/direcionamentos", icon: "🎧", label: "Direcionamentos Semanais" },
 
   {
-    href: "/admin/direcionamentos"
-    icon: "🔮",
-    label: "Direcionamentos Exclusivos",
-  },
+  href: "/admin/direcionamentos",
+  icon: "🔮",
+  label: "Direcionamentos Exclusivos",
+},
 
   { href: "/admin/recados", icon: "📢", label: "Recados" },
 
