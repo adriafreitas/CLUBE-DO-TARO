@@ -34,14 +34,14 @@ export async function POST(req: Request) {
       sandboxInitPoint: response.sandbox_init_point,
     });
   } catch (error) {
-    console.error(error);
+  console.error("Mercado Pago:", error);
 
-    return NextResponse.json(
-      {
-        ok: false,
-        erro: "Erro ao criar preferência",
-      },
-      { status: 500 }
-    );
-  }
+  return NextResponse.json(
+    {
+      ok: false,
+      erro: error instanceof Error ? error.message : String(error),
+    },
+    { status: 500 }
+  );
+}
 }
