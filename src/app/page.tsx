@@ -121,12 +121,14 @@ export default function Home() {
     SOU MEMBRO DO CLUBE DO TARÔ
   </Link>
 
-  <Link
-    href="/cadastro"
-    className="rounded-full border border-[#D4AF37] bg-[#D4AF37] px-8 py-5 text-center font-semibold text-[#1B1235] transition hover:opacity-90"
-  >
-    QUERO FAZER PARTE DO CLUBE
-  </Link>
+  <a
+  href="https://clube-do-taro-landing.vercel.app"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="rounded-full bg-[#D4AF37] px-8 py-5 text-center font-semibold text-[#1B1235] transition hover:opacity-90"
+>
+  QUERO FAZER PARTE DO CLUBE
+</a>
 
 </div>
 
