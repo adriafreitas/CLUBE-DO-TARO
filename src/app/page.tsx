@@ -4,7 +4,17 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import CelestialBackground from "./components/CelestialBackground";
-import { div } from "framer-motion/m";
+import Link from "next/link";
+
+import {
+  BookOpen,
+  GraduationCap,
+  Headphones,
+  ShoppingBag,
+  Sparkles,
+  ArrowRight,
+} from "lucide-react";
+
 function PortalCard({
   title,
   subtitle,
