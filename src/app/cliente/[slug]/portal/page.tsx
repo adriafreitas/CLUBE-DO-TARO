@@ -67,6 +67,7 @@ const router = useRouter();
   const [audioAberto, setAudioAberto] = useState(false);
   const [audioUrl, setAudioUrl] = useState("");
   const [direcionamentoExclusivo, setDirecionamentoExclusivo] = useState<any>(null);
+  const [reformulacao, setReformulacao] = useState<any>(null);
 const [mesAberto, setMesAberto] = useState<string | null>(null);
   const [direcionamentoAberto, setDirecionamentoAberto] = useState(false);
   const [categoria, setCategoria] = useState("");
@@ -77,7 +78,7 @@ const [mesAberto, setMesAberto] = useState<string | null>(null);
 const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
+const [clienteId, setClienteId] = useState("");
   
 const [conteudosPlanilha, setConteudosPlanilha] = useState<ConteudoPlanilha[]>([]);
 const [carregandoConteudos, setCarregandoConteudos] = useState(true);
@@ -100,14 +101,15 @@ useEffect(() => {
 
     try {
       const { data, error } = await supabase
-        .from("club_clients")
-        .select("plano, nome, slug")
-        .eq("slug", slug)
-        .maybeSingle();
+  .from("club_clients")
+  .select("id, plano, nome, slug")
+  .eq("slug", slug)
+  .maybeSingle();
 
       if (error) throw new Error(error.message);
 
       if (data) {
+        setClienteId(data.id);
         setNome(
           data.slug.charAt(0).toUpperCase() + data.slug.slice(1)
         );
@@ -119,15 +121,31 @@ useEffect(() => {
         ).padStart(2, "0")}`;
 
         const { data: exclusivo } = await supabase
-          .from("exclusive_questions")
-          .select("*")
-          .eq("nome_cliente", data.nome)
-          .eq("referencia_mes", referenciaMes)
-          .eq("ativo", true)
-          .maybeSingle();
+  .from("exclusive_questions")
+  .select("*")
+  .eq("cliente_id", data.id)
+  .eq("referencia_mes", referenciaMes)
+  .eq("ativo", true)
+  .maybeSingle();
 
         setDirecionamentoExclusivo(exclusivo);
+        console.log("EXCLUSIVO:", exclusivo);
+if (
+  exclusivo &&
+  exclusivo.status === "Aguardando resposta da assinante"
+) {
+  const { data: recado } = await supabase
+    .from("exclusive_messages")
+    .select("*")
+    .eq("question_id", exclusivo.id)
+    .eq("autor", "admin")
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
 
+  setReformulacao(recado);
+  console.log("RECADO:", recado);
+}
         console.log("Nome do cliente:", data.nome);
         console.log("Referência do mês:", referenciaMes);
         console.log("Direcionamento encontrado:", exclusivo);
@@ -381,7 +399,7 @@ return (
       marginBottom: 12,
     }}
   >
-    🔮 Direcionamento Particular
+    🔮 Direcionamento Exclusivo
   </div>
 
   <p
@@ -428,6 +446,7 @@ return (
     disponível{limitePerguntas > 1 ? "is" : ""} neste mês.
   </div>
 
+  {!reformulacao ? (
   <button
     onClick={() => setDirecionamentoAberto(true)}
     style={{
@@ -444,6 +463,74 @@ return (
   >
     ✨ Fazer minha pergunta
   </button>
+) : (
+  <button
+    onClick={() => {
+      setPergunta(direcionamentoExclusivo?.pergunta || "");
+      setCategoria(direcionamentoExclusivo?.categoria || "");
+      setDirecionamentoAberto(true);
+    }}
+    style={{
+      width: "100%",
+      padding: 14,
+      borderRadius: 999,
+      border: "none",
+      cursor: "pointer",
+      background: "#f4b400",
+      color: "#2b0a3d",
+      fontWeight: 700,
+      fontSize: 15,
+    }}
+  >
+    ✍️ Reformular minha pergunta
+  </button>
+)}
+{reformulacao && (
+  <div
+    style={{
+      marginTop: 18,
+      padding: 18,
+      borderRadius: 16,
+      background: "rgba(244,180,0,.10)",
+      border: "1px solid rgba(244,180,0,.35)",
+    }}
+  >
+    <h3
+      style={{
+        color: "#f4d46a",
+        marginBottom: 10,
+      }}
+    >
+      🟡 Reformule sua pergunta
+    </h3>
+
+    <p
+      style={{
+        color: "#ddd",
+        fontSize: 14,
+        lineHeight: 1.6,
+        marginBottom: 15,
+      }}
+    >
+      Para que seu <strong>Direcionamento Exclusivo</strong> seja o mais preciso possível,
+      a Cigana solicitou uma reformulação da sua pergunta.
+    </p>
+
+    <div
+      style={{
+        background: "rgba(255,255,255,.05)",
+        borderRadius: 12,
+        padding: 15,
+        color: "#fff",
+        lineHeight: 1.7,
+        whiteSpace: "pre-wrap",
+      }}
+    >
+      {reformulacao.mensagem}
+    </div>
+  </div>
+)}
+
 </div>
 
       <button
@@ -517,65 +604,6 @@ return (
                 gap: 10,
               }}
             >
-{direcionamentoExclusivo && (
-  <div
-    style={{
-      background: "#1b0227",
-      borderRadius: 20,
-      padding: 24,
-      border: "1px solid rgba(244,212,106,.20)",
-      marginBottom: 20,
-    }}
-  >
-    <h3
-      style={{
-        color: "#f4d46a",
-        marginBottom: 10,
-      }}
-    >
-      🔮 Direcionamento Exclusivo
-    </h3>
-
-    <div
-      style={{
-        display: "flex",
-        gap: 12,
-        flexWrap: "wrap",
-      }}
-    >
-      <button
-        onClick={() => window.open(direcionamentoExclusivo.audio_url, "_blank")}
-        style={{
-          background: "#6d28d9",
-          color: "#fff",
-          border: "none",
-          borderRadius: 999,
-          padding: "12px 20px",
-          cursor: "pointer",
-        }}
-      >
-        🎧 Ouvir Direcionamento
-      </button>
-
-      <button
-        onClick={() => window.open(direcionamentoExclusivo.pdf_url, "_blank")}
-        style={{
-          background: "#6aa1f4",
-          color: "#2a0738",
-          border: "none",
-          borderRadius: 999,
-          padding: "12px 20px",
-          cursor: "pointer",
-          fontWeight: 700,
-        }}
-      >
-        📄 Baixar PDF
-      </button>
-    </div>
-  </div>
-)}
-
-
 
 {Array.from(
   new Set(conteudos.map((c) => c.semana))
@@ -856,17 +884,20 @@ return (
     }
 
     const { error } = await supabase
-      .from("exclusive_questions")
-     .insert({
-  nome_cliente: nome,
-  email_cliente: email,
-  plano,
-  categoria,
-  pergunta,
-  urgente,
-  referencia_mes: new Date().toISOString().slice(0, 7),
-  status: "Pendente",
-});
+  .from("exclusive_questions")
+  .insert({
+    cliente_id: clienteId,
+    nome_cliente: slug,
+    email_cliente: email,
+    plano,
+    categoria,
+    pergunta,
+    urgente,
+    referencia_mes: new Date().toISOString().slice(0, 7),
+    status: "Nova pergunta",
+    ativo: true,
+  });
+  
    if (error) {
   console.error(error);
 

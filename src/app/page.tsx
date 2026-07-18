@@ -121,11 +121,12 @@ export default function Home() {
 </a>
 
             <a
-              href="https://cigana-tarot-magia.lovable.app/"
-              className="rounded-full bg-[#D4AF37] px-8 py-5 text-center font-semibold text-black transition hover:scale-105"
-            >
-              QUERO FAZER PARTE DO CLUBE  Conheça os Planos
-            </a>
+  href="https://clube-do-taro-landing.vercel.app"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  QUERO FAZER PARTE DO CLUBE
+</a>
           </div>
         </motion.div>
 

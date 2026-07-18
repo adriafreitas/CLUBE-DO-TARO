@@ -10,13 +10,17 @@ const menu = [
 
   { href: "/admin/financeiro", icon: "💳", label: "Financeiro" },
 
-  { href: "/admin/perguntas", icon: "📩", label: "Perguntas" },
-
-   {
-  href: "/admin/direcionamentos",
-  icon: "🔮",
-  label: "Direcionamentos Exclusivos",
+  {
+  href: "/admin/atendimento",
+  icon: "🌹",
+  label: "Atendimento",
 },
+
+   // {
+//   href: "/admin/direcionamentos",
+//   icon: "🔮",
+//   label: "Direcionamentos Exclusivos",
+// },
 
   { href: "/admin/recados", icon: "📢", label: "Recados" },
 
