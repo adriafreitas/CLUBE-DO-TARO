@@ -10,6 +10,7 @@ const corsHeaders = {
 };
 
 export async function OPTIONS() {
+  
   return new NextResponse(null, {
     status: 204,
     headers: corsHeaders,
@@ -68,18 +69,22 @@ export async function POST(req: Request) {
         headers: corsHeaders,
       }
     );
-  } catch (error) {
-    console.error("Mercado Pago:", error);
+ } catch (error: any) {
+  console.error("Mercado Pago ERRO COMPLETO:");
+  console.error(error);
 
-    return NextResponse.json(
-      {
-        ok: false,
-        erro: error instanceof Error ? error.message : String(error),
-      },
-      {
-        status: 500,
-        headers: corsHeaders,
-      }
-    );
-  }
+  return NextResponse.json(
+    {
+      ok: false,
+      erro: error?.message,
+      causa: error?.cause,
+      status: error?.status,
+      response: error?.response,
+      detalhes: error,
+    },
+    {
+      status: 500,
+      headers: corsHeaders,
+    }
+  );
 }
