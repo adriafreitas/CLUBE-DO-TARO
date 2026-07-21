@@ -58,7 +58,7 @@ export async function POST(req: Request) {
       },
     });
 
-    return NextResponse.json(
+        return NextResponse.json(
       {
         ok: true,
         preferenceId: response.id,
@@ -69,22 +69,22 @@ export async function POST(req: Request) {
         headers: corsHeaders,
       }
     );
- } catch (error: any) {
-  console.error("Mercado Pago ERRO COMPLETO:");
-  console.error(error);
+  } catch (error: any) {
+    console.error("=== MERCADO PAGO ERRO ===");
+    console.error(error);
 
-  return NextResponse.json(
-    {
-      ok: false,
-      erro: error?.message,
-      causa: error?.cause,
-      status: error?.status,
-      response: error?.response,
-      detalhes: error,
-    },
-    {
-      status: 500,
-      headers: corsHeaders,
-    }
-  );
+    return NextResponse.json(
+      {
+        ok: false,
+        erro: error?.message ?? null,
+        causa: error?.cause ?? null,
+        status: error?.status ?? null,
+        response: error?.response ?? null,
+      },
+      {
+        status: 500,
+        headers: corsHeaders,
+      }
+    );
+  }
 }
