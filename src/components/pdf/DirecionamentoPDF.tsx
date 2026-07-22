@@ -83,7 +83,8 @@ type Props = {
 };
 
 export default function DirecionamentoPDF({ leitura }: Props) {
-  return (
+  
+    return (
     <Document>
       <Page size="A4" style={styles.page}>
 
